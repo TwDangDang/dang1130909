@@ -6,8 +6,6 @@
     <title>Unity WebGL Player | web</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <link rel="stylesheet" href="TemplateData/diagnostics.css">
-    <script src="TemplateData/diagnostics.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -22,7 +20,6 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
         <div id="unity-build-title">web</div>
       </div>
     </div>
@@ -34,7 +31,6 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
-      var diagnostics_icon = document.getElementById("diagnostics-icon");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
@@ -63,9 +59,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/WEB.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WEB.data.unityweb",
-        frameworkUrl: buildUrl + "/WEB.framework.js.unityweb",
-        codeUrl: buildUrl + "/WEB.wasm.unityweb",
+        dataUrl: buildUrl + "/WEB.data.gz",
+        frameworkUrl: buildUrl + "/WEB.framework.js.gz",
+        codeUrl: buildUrl + "/WEB.wasm.gz",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "web",
@@ -94,11 +90,6 @@
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
 
-        // position the diagnostics icon in the corner on the canvas
-        diagnostics_icon.style.position = "fixed";
-        diagnostics_icon.style.bottom = "10px";
-        diagnostics_icon.style.right = "0px";
-        canvas.after(diagnostics_icon);
 
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
@@ -116,9 +107,6 @@
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 loadingBar.style.display = "none";
-                diagnostics_icon.onclick = () => {
-                  unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
-                };
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
